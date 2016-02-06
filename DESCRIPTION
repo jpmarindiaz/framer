@@ -1,0 +1,16 @@
+Package: framer
+Version: 0.0.0.1
+Title: Framer
+Author: Juan Pablo Marin Diaz
+Maintainer: Juan Pablo Marin Diaz <jpmarindiaz@gmail.com>
+Description: Frames
+License: GLP-3
+LazyData: no
+Depends:
+    R (>= 3.0.0),
+    R6,
+    lubridate,
+    dplyr
+Suggests:
+    testthat
+RoxygenNote: 5.0.1
