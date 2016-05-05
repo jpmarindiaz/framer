@@ -3,19 +3,20 @@ context("validations")
 
 test_that("Frame validations", {
   t <- sampleData("CN", asFrame = TRUE)
-  expect_true(frameValidate(t,"hasFtype","CN"))
-  expect_false(frameValidate(t,"hasCtypes",c("C","N","N")))
+  expect_true(frameValidate(t,"hasFtype","Ca-Nu"))
+  expect_false(frameValidate(t,"hasCtypes",c("Ca","Nu","Nu")))
   expect_true(frameValidate(t,"hasColnames",c("a","number")))
 
 })
 
 test_that("Col validations", {
 
-  frame <- sampleData("DXXNNNN", asFrame = TRUE)
+  t <- sampleData("DXXNNNN", asFrame = FALSE)
+  frame <- frame(t)
   cols <- c("pagePathLevel1","fullReferrer","pageviews")
-  ctype <- "X"
+  ctype <- "Tx"
   expect_false(frameColValidate(frame,cols,"hasCtype",ctype))
-  expect_true(frameColValidate(frame,c("pageviews","avgTimeOnPage"),"hasCtype","N"))
+  expect_true(frameColValidate(frame,c("pageviews","avgTimeOnPage"),"hasCtype","Nu"))
 
   availableSampleData()
   t <- sampleData("CN",asFrame = TRUE)

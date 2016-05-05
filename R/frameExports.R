@@ -1,13 +1,17 @@
 #' @export
 frame<- function(data, ctypes=NULL,cformats=NULL,
+                 cdescriptions=NULL,
                    name = NULL, description = NULL,recordName = NULL){
   if(isFrame(data)){
     warning("data is already a Frame")
     return(data)
   }
+  # if(nrow(data) >0)
+  #rownames(data) <- NULL
   frame <- Frame$new(data,
                     ctypes=ctypes,
                     cformats=cformats,
+                    cdescriptions = cdescriptions,
                     name = name %||% deparse(substitute(data)),
                     description = description,
                     recordName = recordName)
@@ -35,8 +39,17 @@ frameske<- function(ctypes=NULL,cformats=NULL,cnames = NULL,
 
 #' @export
 isFrame <- function(d){
-  #message(class(ttt))
   "Frame" %in% class(d)
+}
+
+#' @export
+sameFrames <- function(f1,f2){
+  all(
+    identical(getCnames(f1),getCnames(f2)),
+    identical(getCtypes(f1),getCtypes(f2)),
+    identical(getCformats(f1),getCformats(f2)),
+    identical(f1$d,f2$d)
+  )
 }
 
 #' @export

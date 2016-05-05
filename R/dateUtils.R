@@ -42,7 +42,7 @@ whichDTH <-function(x){
   d <- c(isDate(x),isDatetime(x), isTime(x))
   if(!any(d)) return(NULL)
   #Reduce(`||`,d)
-  dth <- c("D","T","H")
+  dth <- c("Da","Dt","Ho")
   dth[d]
 }
 

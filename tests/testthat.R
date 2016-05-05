@@ -1,4 +1,4 @@
 library(testthat)
-library(framer)
+suppressMessages(library(framer))
 
 test_check("framer")

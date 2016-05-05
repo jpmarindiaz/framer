@@ -5,12 +5,12 @@ Column <- R6Class("Column",
                     name = NA,
                     ctype = NA,
                     cformat = NA,
-                    description = NA,
-                    initialize = function(name, ctype, cformat, description = NULL) {
+                    cdescription = NA,
+                    initialize = function(name, ctype, cformat, cdescription = NULL) {
                       if (!missing(name)) self$name <- name
                       if (!missing(ctype)) self$ctype <- ctype
                       self$cformat <- cformat %||% getDefaultCformats(self$ctype)
-                      self$description <- description %||% ""
+                      self$cdescription <- cdescription %||% ""
                       self$validate()
                     },
                     validate = function(){
@@ -27,6 +27,7 @@ Column <- R6Class("Column",
                         "\nname: ", self$name,
                         "\nctype: ", self$ctype,
                         "\ncformat: ", self$cformat,
+                        "\ncdescription: ", self$cdescription,
                         "\n"
                       )
                       cat(p)

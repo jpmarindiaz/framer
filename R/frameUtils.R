@@ -1,47 +1,47 @@
 
-availableCtypes <- c("C","N","D","H","T","X","G","I","A")
+availableCtypes <- c("Ca","Nu","Da","Ho","Dt","Tx","Ge","Im","Au")
 
 #' @export
 availableCtypes <- function(){
   list(
     "_" = "Null",
-    "C" = "Categorical",
-    "N" = "Numeric",
-    "D" = "Dates",
-    "H" = "Hours",
-    "T" = "Datetime",
-    "X" = "Text",
-    "G" = "Geography",
-    "I" = "Image",
-    "A" = "Audio"
+    "Ca" = "Categorical",
+    "Nu" = "Numeric",
+    "Da" = "Dates",
+    "Ho" = "Hours",
+    "Dt" = "Datetime",
+    "Tx" = "Text",
+    "Ge" = "Geography",
+    "Im" = "Image",
+    "Au" = "Audio"
   )
 }
 
 #' @export
 availableCformats <- function(){
   list(
-  "C" = "",
-  "N" = "",
-  "D" = c("yyyy-mm-dd","unixTimeStamp"),
-  "H" = "HH:MM:SS",
-  "T" = "yyyy-mm-dd hh:mm:ss",
-  "G" = c("latNum","lngNum"),
-  "X" = c("plain","html","markdown"),
-  "I" = c("imageUrl","file"),
-  "A" = "audio"
+  "Ca" = "",
+  "Nu" = "",
+  "Dt" = c("yyyy-mm-dd","unixTimeStamp"),
+  "Ho" = "HH:MM:SS",
+  "Dt" = "yyyy-mm-dd hh:mm:ss",
+  "Ge" = c("latNum","lngNum"),
+  "Tx" = c("plain","html","markdown"),
+  "Im" = c("imageUrl","file"),
+  "Au" = "audio"
   )
 }
 
 defaultCformats <- list(
-  "C" = "",
-  "N" = "",
-  "D" = "yyyy-mm-dd",
-  "H" = "HH:MM:SS",
-  "T" = "yyyy-mm-dd hh:mm:ss",
-  "X" = "plain",
-  "G" = "latNum",
-  "I" = "imageUrl",
-  "A" = "audio"
+  "Ca" = "",
+  "Nu" = "",
+  "Da" = "yyyy-mm-dd",
+  "Ho" = "HH:MM:SS",
+  "Dt" = "yyyy-mm-dd hh:mm:ss",
+  "Tx" = "plain",
+  "Ge" = "latNum",
+  "Im" = "imageUrl",
+  "Au" = "audio"
 )
 
 isImgUrl <- function(x) all(grepl("([^http\\s]+(\\.(?i)(jpg|png|gif|bmp|svg))$)",x))
@@ -58,7 +58,7 @@ guessCtype <- function(v){
   if(length(v) == 0)
     return("_")
   if(class(v) %in% c("integer","numeric")){
-    ctype <- "N"
+    ctype <- "Nu"
     return(ctype)
   }
   dth <- whichDTH(v)
@@ -66,18 +66,18 @@ guessCtype <- function(v){
     ctype <- dth
   else{
     v <- as.character(v)
-    ctype <- "C"
-    if(ctype == "C" && isImgUrl(v)){
-      ctype <- "I"
+    ctype <- "Ca"
+    if(ctype == "Ca" && isImgUrl(v)){
+      ctype <- "Im"
     }
 
-    if(ctype == "C" && isXtype(v))
-      ctype <- "X"
+    if(ctype == "Ca" && isTxType(v))
+      ctype <- "Tx"
   }
   ctype
 }
 
-isXtype <- function(v){
+isTxType <- function(v){
   #nwords <- function(x) vapply(strsplit(x, "\\W+"), length, integer(1))
   nwords <- function(x) vapply(strsplit(x, "[[:punct:] [^/]]"), length, integer(1))
   any(nchar(v) > 100) && any(nwords(v)>10)
@@ -93,9 +93,7 @@ guessCtypes <- function(df){
 
 guessCformats <- function(df){
   gc <- guessCtypes(df)
-  idx <- match(gc,names(defaultCformats))
-
-  unname(unlist(defaultCformats[idx]))
+  defaultCformats[gc]
 }
 
 
@@ -109,17 +107,17 @@ guessFtype <- function(df){
 forceCtypes <- function(df, ctypes, cformat = NULL){
   if(ncol(df)!= length(ctypes)) stop("number of df cols must be the same as col types length")
   for (i in seq_along(ctypes)){
-    if(ctypes[i]=="N"){df[,i]<- as.numeric(df[,i])}
-    if(ctypes[i]=="C"){df[,i]<- as.character(df[,i])}
-    if(ctypes[i]=="X"){df[,i]<- as.character(df[,i])}
-    if(ctypes[i]=="I"){
+    if(ctypes[i]=="Nu"){df[,i]<- as.numeric(df[,i])}
+    if(ctypes[i]=="Ca"){df[,i]<- as.character(df[,i])}
+    if(ctypes[i]=="Tx"){df[,i]<- as.character(df[,i])}
+    if(ctypes[i]=="Im"){
       if(!isImgUrl(df[,i])) stop ("Not an image Url")
       df[,i]<- as.character(df[,i])
       }
-    if(ctypes[i]=="D"){df[,i]<- parseDatetime(df[,i],"D")}
-    if(ctypes[i]=="T"){df[,i]<- parseDatetime(df[,i],"T")}
-    if(ctypes[i]=="H"){df[,i]<- parseDatetime(df[,i],"H")}
-    if(ctypes[i]=="G"){df[,i]<- as.numeric(df[,i])}
+    if(ctypes[i]=="Dt"){df[,i]<- parseDatetime(df[,i],"Dt")}
+    if(ctypes[i]=="Tm"){df[,i]<- parseDatetime(df[,i],"Tm")}
+    if(ctypes[i]=="Ho"){df[,i]<- parseDatetime(df[,i],"Ho")}
+    if(ctypes[i]=="Ge"){df[,i]<- as.numeric(df[,i])}
   }
   df
 }

@@ -34,6 +34,15 @@ frameVal_hasCtypes <- function(frame,ctypes){
   identical(getCtypes(frame),ctypes)
 }
 
+#' frameVal_allNumeric
+#' @name frameVal_allNumeric
+#' @description frameVal_allNumeric
+#' @export
+frameVal_allNumeric <- function(frame){
+  identical(unique(getCtypes(frame)),"Nu")
+}
+
+
 #' frameVal_hasColnames
 #' @name frameVal_hasColnames
 #' @description frameVal_hasColnames
