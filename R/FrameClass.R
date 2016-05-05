@@ -21,7 +21,7 @@ Frame <- R6Class("Frame",
                      ctypes <- ctypes %||% guessCtypes(d)
                      cformats <- cformats %||% guessCformats(d)
                      cdescriptions <- cdescriptions %||% character(ncol(d))
-                     self$name <- name %||% deparse(substitute(d))
+                     self$name <- name %||% trim_punct(deparse(substitute(d)))
                      self$description <- description  %||% ""
                      self$recordName <- recordName %||% "observation"
                      fieldNames <- names(d)
@@ -75,8 +75,8 @@ Frame <- R6Class("Frame",
                      self$validate()
                    },
                    writeCSV = function(file = NULL, path = "."){
-                     file <- file %||% paste0(self$name,".csv")
-                     file <- file.path(path,file)
+                     file <- file_path_sans_ext(file) %||% self$name
+                     file <- file.path(path,paste0(file,".csv"))
                      write.csv(self$data,file,row.names = FALSE)
                      file
                    },

@@ -55,7 +55,24 @@ test_that("frameValidations", {
   expect_true(frameColValidate(t,"number","unique"))
 })
 
-
+test_that("frameIO",{
+  t <- frame(mtcars)
+  writeFrame(t)
+  f <- readFrame(file = "mtcars")
+  unlink("mtcars.csv")
+  unlink("mtcars.yaml")
+  expect_true(sameFrames(t,f))
+  # write
+  filename <- "sampleFrame"
+  tmpDir <- tempdir()
+  writeFrame(t,file = filename, path = tmpDir)
+  f2 <- readFrame(file = filename, path=tmpDir)
+  expect_true(sameFrames(t,f2))
+  expect_true(file.exists(file.path(tmpDir,paste0(filename,".csv"))))
+  expect_true(file.exists(file.path(tmpDir,paste0(filename,".yaml"))))
+  unlink(file.path(tmpDir,paste0(filename,".csv")))
+  unlink(file.path(tmpDir,paste0(filename,".yaml")))
+})
 
 
 

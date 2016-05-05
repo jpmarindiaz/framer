@@ -1,4 +1,8 @@
 
+trim_punct <- function (x){
+  gsub("[[:punct:]]", "", x)
+}
+
 dfFactorsToCharacters <- function(d){
   i <- sapply(d, is.factor)
   d[i] <- lapply(d[i], as.character)

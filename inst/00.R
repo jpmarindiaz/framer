@@ -1,7 +1,7 @@
 library(devtools)
 load_all()
 document()
-#install()
+install()
 test()
 
 # devtools::use_testthat() ## Create package testing files
@@ -11,11 +11,12 @@ str(iris)
 frame(iris)
 frame(mtcars)
 
-##
+## ADD TESTS
 t <- frame(mtcars)
 # t$asList()
 # t$writeCSV()
 # t$writeYAML()
+writeFrame(t,"inst/data/frame/mtcars")
 
 writeFrame(t)
 f <- readFrame(file = "mtcars")
