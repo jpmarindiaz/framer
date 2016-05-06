@@ -66,6 +66,12 @@ getCnames <- function(frame){
 }
 
 #' @export
+getCdescriptions <- function(frame){
+  if(!isFrame(frame)) stop('class is not Frame')
+  unlist(Map(function(i){i$cdescription},frame$fields))
+}
+
+#' @export
 getCtypes <- function(frame, cols = NULL){
   if(!isFrame(frame)) stop("Not a Frame")
   cols <- cols %||% getCnames(frame)
@@ -166,5 +172,11 @@ setCnames <- function(t,cnames, idx = NULL){
   t
 }
 
-
+#' @export
+setCdescriptions <- function(t,cdescriptions, idx = NULL){
+  if(!isFrame(t))
+    stop("frame must be a Frame")
+  t$setCdescriptions(cdescriptions,idx = idx)
+  t
+}
 

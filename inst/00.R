@@ -12,13 +12,12 @@ frame(iris)
 frame(mtcars)
 
 ## ADD TESTS
-t <- frame(mtcars)
+t <- frame(mtcars, cdescriptions = 1:11)
 # t$asList()
 # t$writeCSV()
 # t$writeYAML()
-writeFrame(t,"inst/data/frame/mtcars")
+writeFrame(t,"mtcars")
 
-writeFrame(t)
 f <- readFrame(file = "mtcars")
 
 sameFrames(t,f)

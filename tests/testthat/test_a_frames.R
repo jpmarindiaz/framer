@@ -30,6 +30,16 @@ test_that("Create Frame", {
   expect_equal(getCnames(setCnames(t,cnames)),getCnames(t))
   expect_error(t$setCnames(c("res","res")))
   expect_error(setCnames(t,c("first","second")))
+
+  t <- sampleData("CCN", asFrame = TRUE)
+  cdescriptions <- c("res","sec")
+  t$setCdescriptions(cdescriptions, idx = c(3,1))
+  expect_equal(getCdescriptions(t),c('sec','','res'))
+  cdescriptions = c("a","v","vd")
+  t$setCdescriptions(cdescriptions)
+  expect_equal(getCdescriptions(setCdescriptions(t,cdescriptions)),getCdescriptions(t))
+  expect_error(t$setCdescriptions(c("res","res")))
+  expect_error(setCdescriptions(t,c("first","second")))
 })
 
 

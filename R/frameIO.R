@@ -16,7 +16,7 @@ readFrame <- function(file = NULL, path = NULL){
   csvFile <- paste0(file,".csv")
   d <- read.csv(file.path(path,csvFile),stringsAsFactors = FALSE)
   l <- list()
-  if(file.exists(yamlFile))
+  if(file.exists(file.path(path, yamlFile)))
     l <- yaml.load_file(file.path(path,yamlFile))
   frame(data = d,
         name = l$name,

@@ -74,6 +74,20 @@ Frame <- R6Class("Frame",
                      names(self$d) <- self$getCnames()
                      self$validate()
                    },
+                   setCdescriptions = function(cdescriptions, idx = NULL){
+                     originalCdescriptions <- self$getCdescriptions()
+                     if(length(cdescriptions)!= length(originalCdescriptions) && is.null(idx))
+                       stop("descriptions must be the same length as original")
+                     idx <- idx %||% seq_along(originalCdescriptions)
+                     j <- 1
+                     originalCdescriptions[idx] <- cdescriptions
+                     newNames <- originalCdescriptions
+                     lapply(seq_along(newNames), function(i){
+                       self$fields[[i]]$cdescription <- newNames[i]
+                     })
+                     names(self$d) <- self$getCdescriptions()
+                     self$validate()
+                   },
                    writeCSV = function(file = NULL, path = "."){
                      file <- file_path_sans_ext(file) %||% self$name
                      file <- file.path(path,paste0(file,".csv"))
@@ -95,12 +109,11 @@ Frame <- R6Class("Frame",
                      )
                    },
                    writeYAML = function(file = NULL, path = "."){
-                     file <- file %||% self$name
-                     file <- file.path(path,file)
+                     file <- file_path_sans_ext(file) %||% self$name
+                     file <- file.path(path,paste0(file,".yaml"))
                      l <- self$asList()
                      l$data <- paste0(file,".csv")
                      yaml <- as.yaml(l)
-                     file <- paste0(file,".yaml")
                      writeLines(yaml,file)
                      file
                    },
