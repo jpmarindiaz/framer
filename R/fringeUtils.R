@@ -122,9 +122,9 @@ forceCtypes <- function(df, ctypes, cformat = NULL){
   df
 }
 
-getColumnNames <- function(frame){
-  if(!isFrame(frame)) stop('class is not Frame')
-  unlist(Map(function(i){i$name},frame$fields))
+getColumnNames <- function(fringe){
+  if(!isFringe(fringe)) stop('class is not Fringe')
+  unlist(Map(function(i){i$name},fringe$fields))
 }
 
 removeRowAllNA <- function(d){

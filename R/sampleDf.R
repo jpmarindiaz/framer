@@ -1,14 +1,14 @@
-#' Creates a new Dataframe from a dataframe
+#' Creates a new Datafringe from a dataframe
 #' @name sampleData
-#' @description Creates a new datapackage from json, data frame, list of data frames, list of data framees (see Dataframe reference class)
-#' @param d might be a json string, data frame or list of data frames.
+#' @description Creates a new datapackage from json, data fringe, list of data fringes, list of data fringees (see Datafringe reference class)
+#' @param d might be a json string, data fringe or list of data fringes.
 #' @return dp
 #' @export
 #' @examples \dontrun{
-#' frame <- newDataframeFromDataframe(mtcars)
+#' fringe <- newDatafringeFromDatafringe(mtcars)
 #' }
-sampleData <- function(ftype, asFrame=FALSE){
-  dir <- system.file("sampledata",package="framer", mustWork=TRUE)
+sampleData <- function(ftype, asFringe=FALSE){
+  dir <- system.file("sampledata",package="fringer", mustWork=TRUE)
   if(!ftype %in% availableSampleData()){
     stop("No data for this ftype")
     }
@@ -16,7 +16,7 @@ sampleData <- function(ftype, asFrame=FALSE){
     filename <- paste0("data",ftype,".csv")
     out <- read.csv(file.path(dir,filename), stringsAsFactors=FALSE)
   }
-  if(asFrame){out <- frame(out)}
+  if(asFringe){out <- fringe(out)}
   out
 }
 
@@ -24,7 +24,7 @@ sampleData <- function(ftype, asFrame=FALSE){
 #' @export
 #'
 availableSampleData <- function(){
-  dir <- system.file("sampledata",package="framer", mustWork=TRUE)
+  dir <- system.file("sampledata",package="fringer", mustWork=TRUE)
   files <- list.files(dir)
   files <- files[grepl("^data.*csv$",files)]
   x <- gsub("data","",files)

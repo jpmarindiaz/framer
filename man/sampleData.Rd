@@ -2,22 +2,22 @@
 % Please edit documentation in R/sampleDf.R
 \name{sampleData}
 \alias{sampleData}
-\title{Creates a new Dataframe from a dataframe}
+\title{Creates a new Datafringe from a dataframe}
 \usage{
-sampleData(ftype, asFrame = FALSE)
+sampleData(ftype, asFringe = FALSE)
 }
 \arguments{
-\item{d}{might be a json string, data frame or list of data frames.}
+\item{d}{might be a json string, data fringe or list of data fringes.}
 }
 \value{
 dp
 }
 \description{
-Creates a new datapackage from json, data frame, list of data frames, list of data framees (see Dataframe reference class)
+Creates a new datapackage from json, data fringe, list of data fringes, list of data fringees (see Datafringe reference class)
 }
 \examples{
 \dontrun{
-frame <- newDataframeFromDataframe(mtcars)
+fringe <- newDatafringeFromDatafringe(mtcars)
 }
 }
 

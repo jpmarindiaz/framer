@@ -5,26 +5,26 @@ install()
 test()
 
 # devtools::use_testthat() ## Create package testing files
-library(framer)
+library(fringer)
 
 str(iris)
-frame(iris)
-frame(mtcars)
+fringe(iris)
+fringe(mtcars)
 
 ## ADD TESTS
-t <- frame(mtcars, cdescriptions = 1:11)
+t <- fringe(mtcars, cdescriptions = 1:11)
 # t$asList()
 # t$writeCSV()
 # t$writeYAML()
-writeFrame(t,"mtcars")
+writeFringe(t,"mtcars")
 
-f <- readFrame(file = "mtcars")
+f <- readFringe(file = "mtcars")
 
-sameFrames(t,f)
+sameFringes(t,f)
 
 f1 <- t
 f2 <- f
-sameFrames(f1,f2)
+sameFringes(f1,f2)
 
 
 
@@ -33,26 +33,26 @@ str(f)
 
 self <- t
 t$data
-selectFrameCols(t,1:3)
+selectFringeCols(t,1:3)
 
 
-f <- frame(mtcars, cdescriptions = names(mtcars))
-frameValidate(f,"allNumeric")
+f <- fringe(mtcars, cdescriptions = names(mtcars))
+fringeValidate(f,"allNumeric")
 
-t <- sampleData("CCN", asFrame = FALSE)
+t <- sampleData("CCN", asFringe = FALSE)
 
 
 cdescriptions <- c("","","2","daf","f")
-frame(iris, cdescriptions = cdescriptions)
+fringe(iris, cdescriptions = cdescriptions)
 
 
 
 d <- sampleData("DXXNNNN")
 guessCtypes(d)
-getCaCnames(frame(d),n = 15)
+getCaCnames(fringe(d),n = 15)
 
 
-t <- sampleData("CCN", asFrame = TRUE)
+t <- sampleData("CCN", asFringe = TRUE)
 cnames <- c("res","sec")
 setCnames(t,c("first","second"))
 setCnames(t,c("first","second","third"))

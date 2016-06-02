@@ -1,9 +1,9 @@
-Package: framer
+Package: fringer
 Version: 0.0.0.1
-Title: Framer
+Title: Fringer
 Author: Juan Pablo Marin Diaz
 Maintainer: Juan Pablo Marin Diaz <jpmarindiaz@gmail.com>
-Description: Frames
+Description: Fringes
 License: GLP-3
 LazyData: no
 Depends:

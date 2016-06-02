@@ -1,15 +1,15 @@
 #' @export
-writeFrame <- function(f,file = NULL, path = NULL){
+writeFringe <- function(f,file = NULL, path = NULL){
   path <- path %||% "."
-  if(!isFrame(f))
-    stop("not a frame")
+  if(!isFringe(f))
+    stop("not a fringe")
   csv <- f$writeCSV(file, path)
   yaml <- f$writeYAML(file, path)
   paste0(csv,yaml)
 }
 
 #' @export
-readFrame <- function(file = NULL, path = NULL){
+readFringe <- function(file = NULL, path = NULL){
   path <- path %||% "."
   file <- file_path_sans_ext(file)
   yamlFile <- paste0(file,".yaml")
@@ -18,7 +18,7 @@ readFrame <- function(file = NULL, path = NULL){
   l <- list()
   if(file.exists(file.path(path, yamlFile)))
     l <- yaml.load_file(file.path(path,yamlFile))
-  frame(data = d,
+  fringe(data = d,
         name = l$name,
         description = l$description,
         ctypes = l$ctypes,

@@ -1,6 +1,6 @@
-#' @export Frame
-#' @exportClass Frame
-Frame <- R6Class("Frame",
+#' @export Fringe
+#' @exportClass Fringe
+Fringe <- R6Class("Fringe",
                  public = list(
                    name = NA,
                    description = NA,
@@ -119,7 +119,7 @@ Frame <- R6Class("Frame",
                    },
                    print = function(...) {
                      p <- paste0(
-                       "<Frame>",
+                       "<Fringe>",
                        "\nname: ", self$name,
                        "\ndescription: ", self$description,
                        "\ncnames: ", paste(paste0('"',self$getCnames(),'"'),collapse=", "),
