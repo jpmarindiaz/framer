@@ -7,6 +7,33 @@ test()
 # devtools::use_testthat() ## Create package testing files
 library(fringer)
 
+
+## Validators parser
+
+vals <- list(
+  nrows = "v_ %>% nrow > 1",
+  uniques =  "uniques > 1",
+  firstColAllUnique = "select(1) %>% allUnique",
+  fixedColNames = "cnames == ['firstName','lastName','*']",
+  colNamesIn = "cnames in ['one','two','three'] ",
+  colNamesIn = "cnames notIn ['one','two','three'] ",
+  hasFtype = "ftype == 'CaCaNu' ",
+  hasCaFtype = "Ca in ftype",
+  hasCtypes = "ctypes == 'NuCaNu'",
+  allNumeric = "allCtypes == 'Nu'",
+  nrowGreaterTahn = "nrow > 10",
+  twoColsCombinationsAllUnique = "select('n1','n2') %>% allUnique"
+)
+
+
+
+
+
+
+
+
+
+
 str(iris)
 fringe(iris)
 fringe(mtcars)

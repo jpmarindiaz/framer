@@ -61,8 +61,11 @@ getDatafringe <- function(fringe, withNames = TRUE){
 
 #' @export
 getCnames <- function(fringe){
-  if(!isFringe(fringe)) stop('class is not Fringe')
-  unlist(Map(function(i){i$name},fringe$fields))
+  if(isFringe(fringe))
+    return(unlist(Map(function(i){i$name},fringe$fields)))
+  if(is.data.frame(fringe))
+    return(names(fringe))
+  stop("Not a fringed dataframe")
 }
 
 #' @export

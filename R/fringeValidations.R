@@ -1,4 +1,12 @@
 
+
+#' @export
+parseValidator <- function(str){
+  str
+}
+
+
+
 #' @export
 fringeValidateFuns <- function(){
   fringeVal_funs <- as.character(lsf.str("package:fringer"))
