@@ -76,7 +76,8 @@ getCdescriptions <- function(fringe){
 
 #' @export
 getCtypes <- function(fringe, cols = NULL){
-  if(!isFringe(fringe)) stop("Not a Fringe")
+  if(!isFringe(fringe))
+    fringe <- fringe(fringe)
   cols <- cols %||% getCnames(fringe)
   l <- Map(function(i){i[["ctype"]]},fringe$fields)
   names(l) <- Map(function(i){i[["name"]]},fringe$fields)
@@ -86,7 +87,8 @@ getCtypes <- function(fringe, cols = NULL){
 
 #' @export
 getCformats <- function(fringe){
-  if(!isFringe(fringe)) stop("Not a Fringe")
+  if(!isFringe(fringe))
+    fringe <- fringe(fringe)
   fringe$getCformats()
 }
 
@@ -100,7 +102,8 @@ getCaCnames <- function(fringe, n = 4){
 
 #' @export
 getFtype <- function(fringe){
-  if(!isFringe(fringe)) stop('class is not Fringe')
+  if(!isFringe(fringe))
+    fringe <- fringe(fringe)
   fringe$ftype
 }
 

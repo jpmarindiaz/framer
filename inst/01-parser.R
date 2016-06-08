@@ -33,33 +33,40 @@ binaryPrecedence <- function(token) {
     return(10)
   if(token %in% c("select","allUnique","uniques","nrow","ncol","cnames","ctypes","ftype"))
     return(20)
-  if(token %in% c("%>%"))
+  if(token %in% c("%>%","pipe"))
     return(15)
   return(0)
 }
 
-parseExpressionStart <- function(d=NULL) {
+parseExpressionStart <- function() {
   #force(d)
   token <- consume()
   message("Token Start: ",token)
+  # dOperators <- list(
+  #   "select" = function(x,...) dplyr::select_(x,...),
+  #   "allUnique" = function(x) nrow(x) == nrow(unique(x)),
+  #   "uniques" = function(x) nrow(unique(x)),
+  #   "nrow" = function(x) nrow(x),
+  #   "ncol" = function(x) ncol(x),
+  #   "cnames" = function(x) getCnames(x),
+  #   "ctypes" = function(x) guessCtypes(x),
+  #   "ftype" = function(x) getFtype(x)
+  # )
   dOperators <- list(
-    "select" = function(d,...) dplyr::select_(d,...),
-    "allUnique" = function(d) nrow(d) == nrow(unique(d)),
-    "uniques" = function(d) nrow(unique(d)),
-    "nrow" = function(d) nrow(d),
-    "ncol" = function(d) ncol(d),
-    "cnames" = function(d) getCnames(d),
-    "ctypes" = function(d) guessCtypes(d),
-    "ftype" = function(d) getFtype(d)
+    "select" = "select",
+    "allUnique" = "allUnique",
+    "uniques" = "uniques",
+    "nrow" = "nrow",
+    "ncol" = "ncol",
+    "cnames" = "cnames",
+    "ctypes" = "ctypes",
+    "ftype" = "ftype"
   )
 
-  tokenFunName <- gsub('\\(.*?\\)', '', token) # remove everything in '(*)'
-  tokenFunName <- names(dOperators)[match(tokenFunName,names(dOperators))]
-  tokenArgs <- getArgsFromFunctionString(token)
-  if(!is.na(tokenFunName)){
-    f <- dOperators[[tokenFunName]]
-    fArgs <- c(list(d),tokenArgs)
-    return(do.call(f,fArgs))
+  if(token %in% names(dOperators)){
+    #f <- dOperators[[tokenFunName]]
+    #fArgs <- c(list(),tokenArgs)
+    return(deparse(sys.calls()[[sys.nframe()-1]]))
   }
   lOperators <- c("in","equals")
   if(token %in% lOperators)
@@ -72,51 +79,76 @@ parseExpressionStart <- function(d=NULL) {
   return(token)
 }
 
-parseExpressionContinuation <- function(node, d = NULL) {
+parseExpressionContinuation <- function(node) {
   token <- consume()
   message("TOKEN PARSE EXPRESSION CONT: ",token)
   call(token,node,
        parseExpression(
-         precedence = binaryPrecedence(token),
-         d = d)
-       )
+         precedence = binaryPrecedence(token))
+  )
 }
 
-parseExpression <- function(precedence = 0,d = NULL) {
+parseExpression <- function(precedence = 0) {
   #str(d)
-  node <- parseExpressionStart(d)
+  node <- parseExpressionStart()
   str(node)
   message("IDX: ",index,"  NODE: ",node)
   while (precedence < binaryPrecedence(current()))
-    node <- parseExpressionContinuation(node, d = d)
+    node <- parseExpressionContinuation(node)
   node
 }
 
 # Our entry-point for parsing programs.
-parse <- function(program,d) {
+parse <- function(program) {
   tokens <<- tokenize(program)
   index <<- 1
-  parseExpression(d = d)
+  parseExpression()
 }
 
 `in` <- function (x, table) all(match(x, table, nomatch = 0L) > 0L)
 `equals` <- function(x,y) all(x == y)
+`pipe` <- function(d,f) f(d)
+
+  "select" = function(x,...) dplyr::select_(x,...)
+  "allUnique" = function(x) nrow(x) == nrow(unique(x))
+  "uniques" = function(x) nrow(unique(x))
+  "nrow" = function(x) nrow(x)
+  "ncol" = function(x) ncol(x)
+  "cnames" = function(x) getCnames(x)
+  "ctypes" = function(x) guessCtypes(x)
+  "ftype" = function(x) getFtype(x)
 
 
 
-d <- cars
-program <- 'd %>% select("speed") %>% ncol'
-parse(program,d)
+parse("cars pipe nrow")
+eval(parse("cars pipe nrow"))
 
 
+parse("1 in [1,2]")
+parse("1 pipe [1,2]")
+parse("cars pipe select(1)")
+
+parse("nrow(cars)")
+eval(parse("nrow(cars)"))
+
+parse("cars pipe nrow")
+
+parse("cars %>% nrow")
+eval(parse("cars %>% nrow"))
+
+
+
+
+#d <- cars
 program <- 'cnames equals ["speed","dist"]'
-eval(parse(program,d))
+parse(program)
+eval(parse(program))
 program <- 'select(1)'
 parse(program,d)
 program <- 'select("speed")'
 parse(program,d)
 
-
+program <- 'select("speed") %>% ncol'
 parse("cars %>% select(1)")
 parse(program,d)
 eval(parse(program,d))
