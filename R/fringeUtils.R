@@ -1,5 +1,5 @@
 
-availableCtypes <- c("Ca","Nu","Da","Ye","Ho","Dt","Tx","Ge","Im","Au")
+availableCtypes <- c("Ca","Nu","Da","Dy","Mn","Yr","Ho","Dt","Tx","Ge","Im","Au")
 
 #' @export
 availableCtypes <- function(){
@@ -8,7 +8,9 @@ availableCtypes <- function(){
     "Ca" = "Categorical",
     "Nu" = "Numeric",
     "Da" = "Dates",
-    "Ye" = "Years",
+    "Dy" = "Day",
+    "Mn" = "Month",
+    "Yr" = "Years",
     "Ho" = "Hours",
     "Dt" = "Datetime",
     "Tx" = "Text",
@@ -26,7 +28,7 @@ availableCformats <- function(){
   "Dt" = c("yyyy-mm-dd","unixTimeStamp"),
   "Ho" = "HH:MM:SS",
   "Dt" = "yyyy-mm-dd hh:mm:ss",
-  "Ge" = c("latNum","lngNum"),
+  "Ge" = c("code","name","latNum","lonNum"),
   "Tx" = c("plain","html","markdown"),
   "Im" = c("imageUrl","file"),
   "Au" = "audio"
@@ -60,7 +62,9 @@ guessCtype <- function(v){
     return("_")
   if(class(v) %in% c("integer","numeric")){
     ctype <- "Nu"
-    if(all(v %in% 1000:2200)) ctype <- "Ye"
+    # if(all(v %in% 1000:2200)) ctype <- "Yr"
+    # if(all(v %in% 1:31)) ctype <- "Dy"
+    #if(all(v %in% 1:12)) ctype <- "Mn"
     return(ctype)
   }
   dth <- whichDTH(v)
