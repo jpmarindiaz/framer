@@ -1,5 +1,5 @@
 
-availableCtypes <- c("Ca","Nu","Da","Ho","Dt","Tx","Ge","Im","Au")
+availableCtypes <- c("Ca","Nu","Da","Ye","Ho","Dt","Tx","Ge","Im","Au")
 
 #' @export
 availableCtypes <- function(){
@@ -8,6 +8,7 @@ availableCtypes <- function(){
     "Ca" = "Categorical",
     "Nu" = "Numeric",
     "Da" = "Dates",
+    "Ye" = "Years",
     "Ho" = "Hours",
     "Dt" = "Datetime",
     "Tx" = "Text",
@@ -59,6 +60,7 @@ guessCtype <- function(v){
     return("_")
   if(class(v) %in% c("integer","numeric")){
     ctype <- "Nu"
+    if(all(v %in% 1000:2200)) ctype <- "Ye"
     return(ctype)
   }
   dth <- whichDTH(v)
@@ -70,7 +72,6 @@ guessCtype <- function(v){
     if(ctype == "Ca" && isImgUrl(v)){
       ctype <- "Im"
     }
-
     if(ctype == "Ca" && isTxType(v))
       ctype <- "Tx"
   }
