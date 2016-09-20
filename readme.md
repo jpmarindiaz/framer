@@ -2,6 +2,11 @@
 
 ## Todo
 
+
+- Guess ctypes (from sample)
+- Create diccionary
+- Fix hms warnings
+- Make ids in getDictionary when long/weird names
 - Guess all possible ftypes
 - validators DSL
 

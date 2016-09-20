@@ -143,3 +143,10 @@ removeRowAllNA <- function(d){
   d[idx,]
 }
 
+#' @export
+getDictionary <- function(d){
+  d <- fringe(d)
+  data.frame(id = getCnames(d), name = getCnames(d),ctype = getCtypes(d),stringsAsFactors = FALSE)
+}
+
+

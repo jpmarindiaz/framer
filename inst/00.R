@@ -9,6 +9,10 @@ library(fringer)
 
 
 
+
+df <- sampleData("CaYeNu")
+getDictionary(df)
+
 ## Validators parser
 
 vals <- list(
